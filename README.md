@@ -192,4 +192,4 @@ daily-ai-podcast/
 
 ---
 
-Feito com ☕ e muito Python rs 🐍
+Feito com ☕ e muito Python 🐍
