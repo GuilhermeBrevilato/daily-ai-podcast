@@ -1,0 +1,24 @@
+# Credenciais — NUNCA subir para o git
+.env
+.env.noticias
+
+# Outputs e logs gerados automaticamente
+output/
+logs/
+
+# Chrome profile
+chrome-bot-profile/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Mac
+.DS_Store
+
+# Downloads temporários
+*.m4a
+*.mp3
+*.wav
