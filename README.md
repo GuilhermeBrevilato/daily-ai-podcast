@@ -4,25 +4,25 @@
 
 ---
 
-## 🚀 O que faz
+## O que faz
 
-- 🔍 **Pesquisa** automaticamente as principais notícias e estudos de IA
-- 🧠 **Resume e analisa** o conteúdo com GPT-4o, com contexto, tensões e perguntas provocativas
-- 🎙️ **Gera áudio** no NotebookLM com dois apresentadores debatendo o conteúdo
-- 📱 **Envia o podcast** direto no Telegram para todos os destinatários configurados
+- **Pesquisa** automaticamente as principais notícias e estudos de IA
+- **Resume e analisa** o conteúdo com GPT-4o, com contexto, tensões e perguntas provocativas
+- **Gera áudio** no NotebookLM com dois apresentadores debatendo o conteúdo
+- **Envia o podcast** direto no Telegram para todos os destinatários configurados
 
 ---
 
-## 📋 Podcasts gerados
+## Podcasts gerados
 
 | Podcast | Horário | Conteúdo |
 |---------|---------|----------|
-| 🔬 Pesquisas de IA | 03:30 | Papers, estudos e pesquisas científicas de IA |
-| 📰 Notícias de Tech | 04:10 | Novidades, startups e tendências de tecnologia mundial |
+| Pesquisas de IA | 03:30 | Papers, estudos e pesquisas científicas de IA |
+| Notícias de Tech | 04:10 | Novidades, startups e tendências de tecnologia mundial |
 
 ---
 
-## 🛠️ Tecnologias
+## Tecnologias
 
 | Tecnologia | Uso |
 |------------|-----|
@@ -36,7 +36,7 @@
 
 ---
 
-## ⚙️ Instalação
+## Instalação
 
 ```bash
 # 1. Clone o repositório
@@ -57,7 +57,7 @@ cp .env.example .env.noticias
 
 ---
 
-## 🔑 Configuração do .env
+## Configuração do .env
 
 ```env
 # OpenAI
@@ -93,7 +93,7 @@ RESULTS_PER_TOPIC=10
 
 ---
 
-## 🚀 Como rodar
+## Como rodar
 
 ```bash
 # Teste imediato — pesquisas de IA
@@ -108,7 +108,7 @@ python3 main.py
 
 ---
 
-## ⏰ Agendamento automático no Mac
+## Agendamento automático no Mac
 
 ```bash
 # Configura o LaunchAgent para rodar às 03:30
@@ -123,7 +123,7 @@ sudo pmset repeat wakeorpoweron MTWRFSU 03:25:00
 
 ---
 
-## 📁 Estrutura do projeto
+## Estrutura do projeto
 
 ```
 daily-ai-podcast/
@@ -141,7 +141,7 @@ daily-ai-podcast/
 
 ---
 
-## 🔄 Fluxo completo
+## Fluxo completo
 
 ```
 03:25 → Mac acorda automaticamente
@@ -160,7 +160,7 @@ daily-ai-podcast/
 
 ---
 
-## 💰 Custo estimado
+## Custo estimado
 
 | Item | Custo/mês |
 |------|-----------|
@@ -172,7 +172,7 @@ daily-ai-podcast/
 
 ---
 
-## ⚠️ Requisitos
+## Requisitos
 
 - Mac com **Google Chrome** instalado
 - Conta Google com acesso ao **NotebookLM**
@@ -182,7 +182,7 @@ daily-ai-podcast/
 
 ---
 
-## 📝 Observações importantes
+## Observações importantes
 
 - O Chrome usa um perfil separado para manter o login do Google
 - O `caffeinate` impede o Mac de dormir durante a geração do áudio
