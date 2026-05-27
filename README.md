@@ -1,123 +1,195 @@
-# 🎙️ Daily AI Podcast — Guia de Configuração
+# 🎙️ Daily AI Podcast
 
-Sistema que gera automaticamente um podcast diário com as principais pesquisas de IA e notícias de tecnologia, usando NotebookLM + GPT-4o, entregue via Telegram todo dia às 6h.
+> Sistema que gera automaticamente dois podcasts diários usando IA, entregues via Telegram todo dia de madrugada.
 
 ---
 
-## 📋 Pré-requisitos
+## 🚀 O que faz
 
-- Python 3.11+
-- Google Chrome instalado
-- Conta Google com acesso ao NotebookLM
-- Chave de API da OpenAI (GPT-4o)
-- Bot do Telegram configurado
+- 🔍 **Pesquisa** automaticamente as principais notícias e estudos de IA
+- 🧠 **Resume e analisa** o conteúdo com GPT-4o, com contexto, tensões e perguntas provocativas
+- 🎙️ **Gera áudio** no NotebookLM com dois apresentadores debatendo o conteúdo
+- 📱 **Envia o podcast** direto no Telegram para todos os destinatários configurados
+
+---
+
+## 📋 Podcasts gerados
+
+| Podcast | Horário | Conteúdo |
+|---------|---------|----------|
+| 🔬 Pesquisas de IA | 03:30 | Papers, estudos e pesquisas científicas de IA |
+| 📰 Notícias de Tech | 04:10 | Novidades, startups e tendências de tecnologia mundial |
+
+---
+
+## 🛠️ Tecnologias
+
+| Tecnologia | Uso |
+|------------|-----|
+| Python 3.12 | Linguagem principal |
+| GPT-4o (OpenAI) | Pesquisa, resumo e análise de conteúdo |
+| NotebookLM (Google) | Geração de áudio com dois apresentadores IA |
+| Selenium | Automação do browser |
+| Telegram Bot API | Entrega do podcast |
+| ffmpeg | Compressão do áudio |
+| LaunchAgent (Mac) | Agendamento automático diário |
 
 ---
 
 ## ⚙️ Instalação
 
 ```bash
-# 1. Clone ou baixe o projeto
-cd daily-podcast
+# 1. Clone o repositório
+git clone https://github.com/GuilhermeBrevilato/daily-ai-podcast.git
+cd daily-ai-podcast
 
-# 2. Instale as dependências
+# 2. Instale as dependências Python
 pip install -r requirements.txt
 
-# 3. Configure as variáveis de ambiente
+# 3. Instale o ffmpeg
+brew install ffmpeg
+
+# 4. Configure as credenciais
 cp .env.example .env
-# Edite o arquivo .env com suas credenciais
+cp .env.example .env.noticias
+# Edite os arquivos .env com suas chaves
 ```
 
 ---
 
-## 🔑 Configurando o .env
+## 🔑 Configuração do .env
 
 ```env
-OPENAI_API_KEY=sk-...          # Sua chave OpenAI
-TELEGRAM_BOT_TOKEN=...         # Token do seu bot
-TELEGRAM_CHAT_ID=...           # Seu chat ID
-NOTEBOOKLM_EMAIL=...           # Email da conta Google
-NOTEBOOKLM_PASSWORD=...        # Senha da conta Google
+# OpenAI
+OPENAI_API_KEY=sua-chave-openai
+
+# Telegram
+TELEGRAM_BOT_TOKEN=token-do-seu-bot
+TELEGRAM_CHAT_ID=seu-chat-id
+TELEGRAM_CHAT_ID_2=chat-id-opcional
+
+# NotebookLM (conta Google)
+NOTEBOOKLM_EMAIL=seu-email@gmail.com
+NOTEBOOKLM_PASSWORD=sua-senha
+
+# Configurações
+POLLING_INTERVAL_MINUTES=3
+MAX_POLLING_ATTEMPTS=8
+SCHEDULE_TIME=03:30
+
+# Tópicos de pesquisa (separados por |)
+RESEARCH_TOPICS=agentes de IA papers científicos|OpenAI Anthropic Google DeepMind research|large language models estudos acadêmicos
+RESULTS_PER_TOPIC=10
 ```
 
-### Como obter o TELEGRAM_CHAT_ID:
-1. Abra o Telegram e fale com @userinfobot
-2. Ele vai te responder com seu Chat ID
+### Como obter o Telegram Chat ID
+1. Abra o Telegram e fale com **@userinfobot**
+2. Ele responde automaticamente com seu **Id**
 
-### Como criar um bot no Telegram:
-1. Fale com @BotFather
-2. Digite /newbot e siga as instruções
+### Como criar um bot no Telegram
+1. Fale com **@BotFather**
+2. Digite `/newbot` e siga as instruções
 3. Copie o token gerado
 
 ---
 
-## 🚀 Executando
+## 🚀 Como rodar
 
 ```bash
-# Testar agora (execução imediata)
-python main.py --agora
+# Teste imediato — pesquisas de IA
+python3 main.py --agora
 
-# Rodar em modo agendado (todo dia às 06:00)
-python main.py
+# Teste imediato — notícias de tecnologia
+python3 main_noticias.py --agora
 
-# Testar apenas o módulo de pesquisa
-python modules/pesquisa.py
+# Modo agendado (roda automaticamente no horário configurado)
+python3 main.py
 ```
 
 ---
 
-## 🗂️ Estrutura do Projeto
+## ⏰ Agendamento automático no Mac
+
+```bash
+# Configura o LaunchAgent para rodar às 03:30
+launchctl load ~/Library/LaunchAgents/com.dailypodcast.pesquisas.plist
+
+# Configura o LaunchAgent para rodar às 04:10
+launchctl load ~/Library/LaunchAgents/com.dailypodcast.noticias.plist
+
+# Configura o Mac para acordar automaticamente às 03:25
+sudo pmset repeat wakeorpoweron MTWRFSU 03:25:00
+```
+
+---
+
+## 📁 Estrutura do projeto
 
 ```
-daily-podcast/
-├── main.py                    # Orquestrador principal
-├── requirements.txt           # Dependências
-├── .env.example               # Template de configuração
+daily-ai-podcast/
+├── main.py                   # Orquestrador — pesquisas científicas
+├── main_noticias.py          # Orquestrador — notícias de tecnologia
 ├── modules/
-│   ├── pesquisa.py            # Busca e resumo de conteúdo
-│   ├── visao_selenium.py      # IA visual + Selenium
-│   ├── notebooklm.py          # Automação do NotebookLM
-│   └── telegram_sender.py     # Envio via Telegram
-├── output/                    # Resumos e áudios gerados
-└── logs/                      # Logs de execução
+│   ├── pesquisa.py           # Busca e resumo com GPT-4o
+│   ├── notebooklm.py         # Automação completa do NotebookLM
+│   ├── visao_selenium.py     # Agente de visão + Selenium
+│   └── telegram_sender.py   # Envio via Telegram (múltiplos destinatários)
+├── .env.example              # Template de configuração
+├── requirements.txt          # Dependências Python
+└── README.md
 ```
 
 ---
 
-## 💰 Custo estimado com GPT-4o
+## 🔄 Fluxo completo
 
-| Uso | Chamadas/dia | Custo |
-|-----|-------------|-------|
-| Pesquisa + resumos | ~5 | ~$0.02 |
-| Visão (prints Selenium) | ~10 | ~$0.05 |
-| Polling de status | ~4 | ~$0.03 |
-| **Total** | | **~$0.10/dia (~$3/mês)** |
+```
+03:25 → Mac acorda automaticamente
+03:30 → Pesquisa artigos e papers de IA
+        GPT-4o resume e analisa o conteúdo
+        Chrome abre o NotebookLM automaticamente
+        Cria notebook e insere o resumo
+        Clica em gerar áudio
+        Aguarda ~18 minutos
+        Baixa e comprime o áudio
+        🎙️ Envia para todos no Telegram
 
----
-
-## 🔧 Personalizando os tópicos
-
-No arquivo `.env`, edite:
-```env
-RESEARCH_TOPICS=agentes de inteligência artificial|notícias de tecnologia|sua categoria aqui
-RESULTS_PER_TOPIC=10
+04:10 → Mesmo fluxo para notícias de tecnologia
+        🎙️ Podcast de notícias chega no Telegram
 ```
 
 ---
 
-## ⚠️ Observações importantes
+## 💰 Custo estimado
 
-1. **Autenticação Google**: Se usar verificação em duas etapas, pode ser necessário gerar uma senha de app
-2. **Chrome visível**: Na primeira execução, deixe o Chrome visível para verificar se o login funcionou
-3. **NotebookLM**: O tempo de geração do áudio varia (30min a 2h). O sistema verifica a cada 15 minutos
-4. **Logs**: Verifique a pasta `logs/` se algo der errado — há prints de erro salvos
+| Item | Custo/mês |
+|------|-----------|
+| GPT-4o (pesquisa + resumo) | ~$2.00 |
+| GPT-4o (visão Selenium) | ~$1.00 |
+| **Total** | **~$3-4/mês** |
+
+> NotebookLM, Telegram e Selenium são gratuitos.
 
 ---
 
-## 🐛 Troubleshooting
+## ⚠️ Requisitos
 
-**Erro de login Google**: O Google pode bloquear logins automáticos. Acesse manualmente uma vez e marque "lembrar dispositivo".
+- Mac com **Google Chrome** instalado
+- Conta Google com acesso ao **NotebookLM**
+- Chave de API da **OpenAI** (GPT-4o)
+- **Bot do Telegram** configurado
+- Mac **conectado na tomada** para o wake automático funcionar
 
-**Selenium não encontra elemento**: O NotebookLM mudou a interface. Os logs mostram o print da tela no momento do erro.
+---
 
-**Áudio não baixa**: Verifique a pasta Downloads do sistema — o Chrome pode ter baixado lá.
+## 📝 Observações importantes
+
+- O Chrome usa um perfil separado para manter o login do Google
+- O `caffeinate` impede o Mac de dormir durante a geração do áudio
+- Os arquivos `.env` **nunca** são commitados no repositório
+- O áudio é comprimido de ~50MB para ~10MB antes do envio
+
+
+---
+
+Feito com ☕ e muito Python rs 🐍
